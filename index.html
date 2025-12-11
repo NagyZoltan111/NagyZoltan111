@@ -4,14 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Megtakarítási Célkövető</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Inter Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Firebase Imports -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -20,7 +17,6 @@
         // --- Firebase Configuration ---
         // =======================================================================
         // FONTOS: Cseréld le ezt a részt a saját Firebase konfigurációddal!
-        // (IMPORTANT: Paste your config here again)
         // =======================================================================
         const firebaseConfig = {
             apiKey: "AIzaSyBQKq1YggF3GjajZAmjHYtGmZk0ihPJwRs",
@@ -65,28 +61,28 @@
             {
                 title: "50/30/20 Szabály",
                 icon: icons.pie,
-                desc: "Oszd fel a bevételed: 50% szükségletekre (lakhatás, étel), 30% vágyakra (szórakozás), és 20% megtakarításra.",
+                desc: "Oszd fel a bevételed: 50% szükségletekre, 30% vágyakra, és 20% megtakarításra.",
                 color: "text-blue-600",
                 bg: "bg-blue-50"
             },
             {
                 title: "Vésztartalék",
                 icon: icons.shield,
-                desc: "Mielőtt nagy célokra gyűjtenél, legyen félretéve 3-6 havi megélhetési költséged váratlan helyzetekre.",
+                desc: "Mielőtt nagy célokra gyűjtenél, legyen félretéve 3-6 havi megélhetési költséged.",
                 color: "text-red-600",
                 bg: "bg-red-50"
             },
             {
                 title: "30 Napos Szabály",
                 icon: icons.clock,
-                desc: "Ha valamit hirtelen meg akarsz venni, várj 30 napot. Ha még mindig kell, vedd meg. Így elkerülheted az impulzusvásárlást.",
+                desc: "Ha valamit hirtelen meg akarsz venni, várj 30 napot. Ha még mindig kell, vedd meg.",
                 color: "text-purple-600",
                 bg: "bg-purple-50"
             },
             {
-                title: "Fizess Magadnak Először",
+                title: "Fizess Magadnak",
                 icon: icons.coins,
-                desc: "Amint megkapod a fizetésed, azonnal tedd félre a megtakarítást, ne a hónap végén maradt pénzből próbálj gazdálkodni.",
+                desc: "Amint megkapod a fizetésed, azonnal tedd félre a megtakarítást.",
                 color: "text-green-600",
                 bg: "bg-green-50"
             }
@@ -255,7 +251,7 @@
         function renderGoals(goals) {
             goalsContainer.innerHTML = '';
             if (goals.length === 0) {
-                goalsContainer.innerHTML = `<div class=" text-center text-gray-500 p-8 bg-white rounded-lg shadow">Még nincsenek megtakarítási céljaid. Adj hozzá egyet fentről!</div>`;
+                goalsContainer.innerHTML = `<div class="text-center text-gray-500 p-8 bg-white rounded-lg shadow">Még nincsenek megtakarítási céljaid. Adj hozzá egyet fentről!</div>`;
                 return;
             }
             goals.sort((a, b) => a.goalName.localeCompare(b.goalName));
@@ -300,7 +296,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            renderTips(); // Render tips immediately!
+            renderTips(); 
             initializeFirebase();
             newGoalForm.addEventListener('submit', handleAddGoal);
         });
@@ -315,53 +311,76 @@
         input[type=number] { -moz-appearance: textfield; }
     </style>
 </head>
+<body class="bg-slate-100 min-h-screen">
     <div class="container mx-auto max-w-lg lg:max-w-6xl p-4 transition-all duration-300">
-<main id="appContent" class="hidden">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
         
-        <div class="lg:col-span-2 space-y-6">
-            <section>
-                <form id="newGoalForm" class="bg-white p-5 rounded-lg shadow-md">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                        <div id="icon-plus" class="w-5 h-5 mr-2 text-blue-600"></div> Új cél hozzáadása
-                    </h2>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Cél neve</label>
-                            <input type="text" id="goalName" name="goalName" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" placeholder="pl. Új laptop" required>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Célösszeg (Ft)</label>
-                                <input type="number" id="targetAmount" name="targetAmount" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" placeholder="150000" min="1" step="1" required>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Meglévő (Ft)</label>
-                                <input type="number" id="currentAmount" name="currentAmount" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" placeholder="0" min="0" step="1">
-                            </div>
-                        </div>
-                        <button type="submit" class="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 transition-colors">Cél hozzáadása</button>
-                    </div>
-                </form>
-            </section>
+        <header class="my-6 text-center">
+            <h1 class="text-3xl font-bold text-blue-700 mb-2">Megtakarítási Célkövető</h1>
+            <p class="text-gray-500 text-sm">Kövesd nyomon álmaid megvalósulását</p>
+        </header>
 
-            <section>
-                <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <div id="icon-target" class="w-5 h-5 mr-2 text-blue-600"></div> Céljaid
-                </h2>
-                <div id="goalsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-            </section>
+        <div id="loadingSpinner" class="flex justify-center items-center py-10">
+            <svg class="animate-spin h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+            <span class="ml-3 text-gray-600">Célok betöltése...</span>
         </div>
 
-        <div class="lg:col-span-1">
-            <section class="bg-white lg:bg-transparent p-0 lg:p-0 rounded-lg">
-                <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <div id="icon-bulb" class="w-5 h-5 mr-2 text-yellow-500"></div> Pénzügyi Tudatosság
-                </h2>
-                <div id="tipsContainer" class="grid grid-cols-1 gap-4">
-                    </div>
-            </section>
-        </div>
+        <main id="appContent" class="hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                
+                <div class="lg:col-span-2 space-y-6">
+                    <section>
+                        <form id="newGoalForm" class="bg-white p-5 rounded-lg shadow-md">
+                            <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                                <div id="icon-plus" class="w-5 h-5 mr-2 text-blue-600"></div> Új cél hozzáadása
+                            </h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Cél neve</label>
+                                    <input type="text" id="goalName" name="goalName" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" placeholder="pl. Új laptop" required>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Célösszeg (Ft)</label>
+                                        <input type="number" id="targetAmount" name="targetAmount" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" placeholder="150000" min="1" step="1" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Meglévő (Ft)</label>
+                                        <input type="number" id="currentAmount" name="currentAmount" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" placeholder="0" min="0" step="1">
+                                    </div>
+                                </div>
+                                <button type="submit" class="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 transition-colors">Cél hozzáadása</button>
+                            </div>
+                        </form>
+                    </section>
 
+                    <section>
+                        <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                            <div id="icon-target" class="w-5 h-5 mr-2 text-blue-600"></div> Céljaid
+                        </h2>
+                        <div id="goalsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                    </section>
+                </div>
+
+                <div class="lg:col-span-1">
+                    <section class="bg-white lg:bg-transparent p-4 lg:p-0 rounded-lg shadow-md lg:shadow-none">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                            <div id="icon-bulb" class="w-5 h-5 mr-2 text-yellow-500"></div> Pénzügyi Tudatosság
+                        </h2>
+                        <div id="tipsContainer" class="grid grid-cols-1 gap-4">
+                            </div>
+                    </section>
+                </div>
+
+            </div>
+        </main>
+
+        <footer class="text-center text-gray-400 text-sm py-6 mt-4">
+            <p>&copy; 2025 Megtakarítási Célkövető</p>
+        </footer>
     </div>
-</main>
+    
+    <div id="errorToast" class="fixed bottom-4 right-4 w-full max-w-xs bg-red-600 text-white p-4 rounded-lg shadow-lg transition-all duration-300 ease-in-out transform translate-y-full opacity-0">
+        <p id="errorMessage" class="font-medium">Hiba történt.</p>
+    </div>
+</body>
+</html>
