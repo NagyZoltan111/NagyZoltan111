@@ -255,7 +255,7 @@
         function renderGoals(goals) {
             goalsContainer.innerHTML = '';
             if (goals.length === 0) {
-                goalsContainer.innerHTML = `<div class="text-center text-gray-500 p-8 bg-white rounded-lg shadow">Még nincsenek megtakarítási céljaid. Adj hozzá egyet fentről!</div>`;
+                goalsContainer.innerHTML = `<div class=" text-center text-gray-500 p-8 bg-white rounded-lg shadow">Még nincsenek megtakarítási céljaid. Adj hozzá egyet fentről!</div>`;
                 return;
             }
             goals.sort((a, b) => a.goalName.localeCompare(b.goalName));
@@ -315,21 +315,11 @@
         input[type=number] { -moz-appearance: textfield; }
     </style>
 </head>
-<body class="bg-slate-100 min-h-screen">
-    <div class="container mx-auto max-w-lg p-4">
-        <header class="my-6 text-center">
-            <h1 class="text-3xl font-bold text-blue-700 mb-2">Megtakarítási Célkövető</h1>
-            <p class="text-gray-500 text-sm">Kövesd nyomon álmaid megvalósulását</p>
-        </header>
-
-        <div id="loadingSpinner" class="flex justify-center items-center py-10">
-            <svg class="animate-spin h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-            <span class="ml-3 text-gray-600">Célok betöltése...</span>
-        </div>
-
-        <main id="appContent" class="hidden">
-            <!-- Add Form -->
-            <section class="mb-6">
+<main id="appContent" class="hidden">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        
+        <div class="lg:col-span-2 space-y-6">
+            <section>
                 <form id="newGoalForm" class="bg-white p-5 rounded-lg shadow-md">
                     <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
                         <div id="icon-plus" class="w-5 h-5 mr-2 text-blue-600"></div> Új cél hozzáadása
@@ -354,31 +344,23 @@
                 </form>
             </section>
 
-            <!-- Goals List -->
-            <section class="mb-8">
+            <section>
                 <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
                     <div id="icon-target" class="w-5 h-5 mr-2 text-blue-600"></div> Céljaid
                 </h2>
-                <div id="goalsContainer" class="space-y-4"></div>
+                <div id="goalsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </section>
+        </div>
 
-            <!-- Financial Tips Section -->
-            <section>
+        <div class="lg:col-span-1">
+            <section class="bg-white lg:bg-transparent p-0 lg:p-0 rounded-lg">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
                     <div id="icon-bulb" class="w-5 h-5 mr-2 text-yellow-500"></div> Pénzügyi Tudatosság
                 </h2>
-                <div id="tipsContainer" class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    <!-- Tips injected by JS -->
-                </div>
+                <div id="tipsContainer" class="grid grid-cols-1 gap-4">
+                    </div>
             </section>
-        </main>
-    </div>
-    
-    <!-- Footer -->
-    <footer class="text-center text-gray-400 text-sm py-6">
-        <p>&copy; 2025 Megtakarítási Célkövető</p>
-    </footer>
+        </div>
 
-    <div id="errorToast" class="fixed bottom-4 right-4 w-full max-w-xs bg-red-600 text-white p-4 rounded-lg shadow-lg transition-all duration-300 ease-in-out transform translate-y-full opacity-0"><p id="errorMessage" class="font-medium">Hiba történt.</p></div>
-</body>
-</html>
+    </div>
+</main>
